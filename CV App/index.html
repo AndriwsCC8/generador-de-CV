@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de CV (Andriws Castillo)</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #e6f7ff;
+        }
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de CV</h1>
+        <form id="cvForm">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" class="form-control" id="titulo" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo Electrónico:</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" class="form-control" id="telefono" required>
+            </div>
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                <input type="date" class="form-control" id="fechaNacimiento" required>
+            </div>
+            <div class="form-group">
+                <label for="linkedin">LinkedIn:</label>
+                <input type="url" class="form-control" id="linkedin">
+            </div>
+            <div class="form-group">
+                <label for="resumen">Resumen Profesional:</label>
+                <textarea class="form-control" id="resumen" required></textarea>
+            </div>
+            <div class="form-group">
+                <label>¿Tienes experiencia laboral?</label><br>
+                <select id="hasExperience" required>
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                </select>
+            </div>
+            <div id="experienceFields" style="display: none;">
+                <div class="form-group">
+                    <label for="companyName">Nombre de la Empresa:</label>
+                    <input type="text" class="form-control" id="companyName">
+                </div>
+                <div class="form-group">
+                    <label for="startDate">Fecha de Ingreso:</label>
+                    <input type="date" class="form-control" id="startDate">
+                </div>
+                <div class="form-group">
+                    <label for="endDate">Fecha de Finalización:</label>
+                    <input type="date" class="form-control" id="endDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>¿Tienes certificaciones?</label><br>
+                <select id="hasCertifications" required>
+                    <option value="no">No</option>
+                    <option value="yes">Sí</option>
+                </select>
+            </div>
+            <div id="certificationFields" style="display: none;">
+                <div class="form-group">
+                    <label for="certificationName">Nombre de la Certificación:</label>
+                    <input type="text" class="form-control" id="certificationName">
+                </div>
+                <div class="form-group">
+                    <label for="certificationDate">Fecha de Certificación:</label>
+                    <input type="date" class="form-control" id="certificationDate">
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="addSkillBtn" class="btn btn-primary">Agregar Habilidad</button>
+                <div id="skillsContainer"></div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="addSoftwareBtn" class="btn btn-primary">Agregar Software</button>
+                <div id="softwareContainer"></div>
+            </div>
+            <div class="form-group">
+                <button type="button" id="addLanguageBtn" class="btn btn-primary">Agregar Idioma</button>
+                <div id="languagesContainer"></div>
+            </div>
+            <button type="submit" class="btn btn-success">Generar CV</button>
+        </form>
+        <div id="generatedCV" style="margin-top: 50px;"></div>
+    </div>
+
+    <script>
+        // Agregar habilidades
+        document.getElementById('addSkillBtn').addEventListener('click', function() {
+            const skillContainer = document.createElement('div');
+            skillContainer.classList.add('form-group');
+
+            const skillLabel = document.createElement('label');
+            skillLabel.setAttribute('for', 'skillName');
+            skillLabel.textContent = 'Habilidad:';
+            skillContainer.appendChild(skillLabel);
+
+            const skillInput = document.createElement('input');
+            skillInput.setAttribute('type', 'text');
+            skillInput.setAttribute('class', 'form-control');
+            skillInput.setAttribute('name', 'skillName');
+            skillInput.setAttribute('required', true);
+            skillContainer.appendChild(skillInput);
+
+            const skillLevelLabel = document.createElement('label');
+            skillLevelLabel.setAttribute('for', 'skillLevel');
+            skillLevelLabel.textContent = 'Nivel:';
+            skillContainer.appendChild(skillLevelLabel);
+
+            const skillLevelSelect = document.createElement('select');
+            skillLevelSelect.setAttribute('class', 'form-control');
+            skillLevelSelect.setAttribute('name', 'skillLevel');
+            for (let i = 1; i <= 5; i++) {
+                const option = document.createElement('option');
+                option.textContent = i;
+                skillLevelSelect.appendChild(option);
+            }
+            skillContainer.appendChild(skillLevelSelect);
+            document.getElementById('skillsContainer').appendChild(skillContainer);
+        });
+
+        // Agregar software
+        document.getElementById('addSoftwareBtn').addEventListener('click', function() {
+            const softwareContainer = document.createElement('div');
+            softwareContainer.classList.add('form-group');
+
+            const softwareLabel = document.createElement('label');
+            softwareLabel.setAttribute('for', 'softwareName');
+            softwareLabel.textContent = 'Software:';
+            softwareContainer.appendChild(softwareLabel);
+
+            const softwareInput = document.createElement('input');
+            softwareInput.setAttribute('type', 'text');
+            softwareInput.setAttribute('class', 'form-control');
+            softwareInput.setAttribute('name', 'softwareName');
+            softwareInput.setAttribute('required', true);
+            softwareContainer.appendChild(softwareInput);
+
+            const softwareLevelLabel = document.createElement('label');
+            softwareLevelLabel.setAttribute('for', 'softwareLevel');
+            softwareLevelLabel.textContent = 'Nivel:';
+            softwareContainer.appendChild(softwareLevelLabel);
+
+            const softwareLevelSelect = document.createElement('select');
+            softwareLevelSelect.setAttribute('class', 'form-control');
+            softwareLevelSelect.setAttribute('name', 'softwareLevel');
+            for (let i = 1; i <= 5; i++) {
+                const option = document.createElement('option');
+                option.textContent = i;
+                softwareLevelSelect.appendChild(option);
+            }
+            softwareContainer.appendChild(softwareLevelSelect);
+            document.getElementById('softwareContainer').appendChild(softwareContainer);
+        });
+
+        // Agregar idiomas
+        document.getElementById('addLanguageBtn').addEventListener('click', function() {
+            const languageContainer = document.createElement('div');
+            languageContainer.classList.add('form-group');
+
+            const languageLabel = document.createElement('label');
+            languageLabel.setAttribute('for', 'idioma');
+            languageLabel.textContent = 'Idioma:';
+            languageContainer.appendChild(languageLabel);
+
+            const languageInput = document.createElement('input');
+            languageInput.setAttribute('type', 'text');
+            languageInput.setAttribute('class', 'form-control');
+            languageInput.setAttribute('name', 'idioma');
+            languageInput.setAttribute('required', true);
+            languageContainer.appendChild(languageInput);
+
+            const ratingLabel = document.createElement('label');
+            ratingLabel.setAttribute('for', 'puntuacion');
+            ratingLabel.textContent = 'Puntuación:';
+            languageContainer.appendChild(ratingLabel);
+
+            const ratingSelect = document.createElement('select');
+            ratingSelect.setAttribute('class', 'form-control');
+            ratingSelect.setAttribute('name', 'puntuacion');
+            for (let i = 1; i <= 5; i++) {
+                const option = document.createElement('option');
+                option.textContent = i;
+                ratingSelect.appendChild(option);
+            }
+            languageContainer.appendChild(ratingSelect);
+            document.getElementById('languagesContainer').appendChild(languageContainer);
+        });
+
+        // Mostrar u ocultar campos de experiencia laboral y certificaciones
+        document.getElementById('hasExperience').addEventListener('change', function() {
+            const experienceFields = document.getElementById('experienceFields');
+            experienceFields.style.display = this.value === 'yes' ? 'block' : 'none';
+        });
+
+        document.getElementById('hasCertifications').addEventListener('change', function() {
+            const certificationFields = document.getElementById('certificationFields');
+            certificationFields.style.display = this.value === 'yes' ? 'block' : 'none';
+        });
+
+        // Generar CV
+        document.getElementById('cvForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const nombre = document.getElementById('nombre').value;
+            const titulo = document.getElementById('titulo').value;
+            const email = document.getElementById('email').value;
+            const telefono = document.getElementById('telefono').value;
+            const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+            const linkedin = document.getElementById('linkedin').value;
+            const resumen = document.getElementById('resumen').value;
+
+            const hasExperience = document.getElementById('hasExperience').value === 'yes';
+            const companyName = hasExperience ? document.getElementById('companyName').value : null;
+            const startDate = hasExperience ? document.getElementById('startDate').value : null;
+            const endDate = hasExperience ? document.getElementById('endDate').value : null;
+
+            const hasCertifications = document.getElementById('hasCertifications').value === 'yes';
+            const certificationName = hasCertifications ? document.getElementById('certificationName').value : null;
+            const certificationDate = hasCertifications ? document.getElementById('certificationDate').value : null;
+
+            // Crear el contenido del CV
+            let cvContent = `
+                <h2>${nombre}</h2>
+                <p><strong>${titulo}</strong></p>
+                <p>Email: ${email}</p>
+                <p>Teléfono: ${telefono}</p>
+                <p>Fecha de Nacimiento: ${fechaNacimiento}</p>
+                <p>LinkedIn: ${linkedin || 'No disponible'}</p>
+                <p><strong>Resumen Profesional:</strong> ${resumen}</p>
+            `;
+
+            if (hasExperience && companyName && startDate) {
+                cvContent += `
+                    <p><strong>Experiencia Laboral:</strong></p>
+                    <p>Empresa: ${companyName}</p>
+                    <p>Fecha de Ingreso: ${startDate}</p>
+                    <p>Fecha de Finalización: ${endDate || 'Actualmente'}</p>
+                `;
+            }
+
+            if (hasCertifications && certificationName && certificationDate) {
+                cvContent += `
+                    <p><strong>Certificaciones:</strong></p>
+                    <p>Certificación: ${certificationName}</p>
+                    <p>Fecha de Certificación: ${certificationDate}</p>
+                `;
+            }
+
+            // Habilidades
+            const skills = document.getElementsByName('skillName');
+            const skillLevels = document.getElementsByName('skillLevel');
+            if (skills.length > 0) {
+                cvContent += '<p><strong>Habilidades:</strong></p><ul>';
+                for (let i = 0; i < skills.length; i++) {
+                    cvContent += `<li>${skills[i].value} - Nivel ${skillLevels[i].value}</li>`;
+                }
+                cvContent += '</ul>';
+            }
+
+            // Software
+            const softwareNames = document.getElementsByName('softwareName');
+            const softwareLevels = document.getElementsByName('softwareLevel');
+            if (softwareNames.length > 0) {
+                cvContent += '<p><strong>Software:</strong></p><ul>';
+                for (let i = 0; i < softwareNames.length; i++) {
+                    cvContent += `<li>${softwareNames[i].value} - Nivel ${softwareLevels[i].value}</li>`;
+                }
+                cvContent += '</ul>';
+            }
+
+            // Idiomas
+            const idiomas = document.getElementsByName('idioma');
+            const puntuaciones = document.getElementsByName('puntuacion');
+            if (idiomas.length > 0) {
+                cvContent += '<p><strong>Idiomas:</strong></p><ul>';
+                for (let i = 0; i < idiomas.length; i++) {
+                    cvContent += `<li>${idiomas[i].value} - Puntuación ${puntuaciones[i].value}</li>`;
+                }
+                cvContent += '</ul>';
+            }
+            
+
+            document.getElementById('generatedCV').innerHTML = cvContent;
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+

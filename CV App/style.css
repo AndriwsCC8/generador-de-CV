@@ -1,0 +1,114 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eaf6ff; /* color de fondo */
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Form Container */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7fbff; /* Azul muy claro para el formulario */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #cfe2ff; /* Borde azul claro */
+    border-radius: 8px;
+}
+
+/* Form heading */
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+/* Form section titles */
+h2 {
+    font-size: 20px;
+    color: #2980b9; /* Azul más oscuro */
+    margin-top: 20px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+}
+
+/* Form labels */
+label {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Form input fields */
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="date"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 16px;
+    border: 1px solid #cfe2ff; /* Bordes en azul claro */
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Campos vacíos con borde rojo */
+input.validate:invalid,
+textarea.validate:invalid {
+    border-color: #ff4d4f; /* Rojo para campos inválidos */
+}
+
+/* Campos llenos con borde verde */
+input.validate:valid,
+textarea.validate:valid {
+    border-color: #28a745; /* Verde para campos válidos */
+}
+
+/* Botón para eliminar entradas */
+button.remove-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button.remove-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Botón de agregar */
+button.add-btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button.add-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Submit button */
+button.submit-btn {
+    background-color: #2ecc71;
+}
+
+
+
+
+
+
+
